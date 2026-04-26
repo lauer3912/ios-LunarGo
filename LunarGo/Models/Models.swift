@@ -18,7 +18,7 @@ struct MoodEntry: Identifiable, Codable {
         journalText: String? = nil,
         sleepQuality: Int? = nil,
         stressLevel: Int? = nil,
-        moonPhase: MoonPhase = MoonPhaseManager().currentPhase()
+        moonPhase: MoonPhase = MoonPhaseManager().currentPhase
     ) {
         self.id = id
         self.date = date
@@ -104,7 +104,7 @@ struct UserProfile: Codable {
 
     init(
         zodiacSign: ZodiacSign = .leo,
-        theme: AppTheme = .dark,
+        theme: AppTheme = .cosmicDark,
         onboardingComplete: Bool = false,
         createdAt: Date = Date()
     ) {
