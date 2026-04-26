@@ -1,0 +1,128 @@
+# ══════════════════════════════════════════════════════════════
+# LunarGo - iOS App Project Configuration
+# ══════════════════════════════════════════════════════════════
+
+name: LunarGo
+options:
+  bundleIdPrefix: com.ggsheng
+  deploymentTarget:
+    iOS: "16.0"
+  xcodeVersion: "15.0"
+  generateEmptyDirectories: true
+
+# ══════════════════════════════════════════════════════════════
+# Global Build Settings
+# ══════════════════════════════════════════════════════════════
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+    CODE_SIGN_STYLE: Automatic
+    DEVELOPMENT_TEAM: 9L6N2ZF26B
+    ENABLE_USER_SCRIPT_SANDBOXING: NO
+
+# ══════════════════════════════════════════════════════════════
+# Target 1: Main App
+# ══════════════════════════════════════════════════════════════
+
+targets:
+  LunarGo:
+    type: application
+    platform: iOS
+    sources:
+      - path: LunarGo
+        excludes:
+          - "**/.DS_Store"
+    settings:
+      base:
+        INFOPLIST_FILE: LunarGo/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.ggsheng.LunarGo
+        PRODUCT_NAME: LunarGo
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        GENERATE_INFOPLIST_FILE: NO
+        SWIFT_EMIT_LOC_STRINGS: YES
+        CODE_SIGN_ENTITLEMENTS: LunarGo/LunarGo.entitlements
+        CODE_SIGNING_ALLOWED: NO
+        DEVELOPMENT_TEAM: 9L6N2ZF26B
+      configs:
+        Debug:
+          CODE_SIGNING_ALLOWED: NO
+        Release:
+          CODE_SIGNING_ALLOWED: YES
+    entitlements:
+      path: LunarGo/LunarGo.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.ggsheng.LunarGo
+
+# ══════════════════════════════════════════════════════════════
+# Target 2: Unit Tests
+# ══════════════════════════════════════════════════════════════
+
+  LunarGoTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: LunarGoTests
+        excludes:
+          - "**/.DS_Store"
+    dependencies:
+      - target: LunarGo
+    settings:
+      base:
+        INFOPLIST_FILE: LunarGoTests/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.ggsheng.LunarGoTests
+        PRODUCT_NAME: LunarGoTests
+        GENERATE_INFOPLIST_FILE: NO
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/LunarGo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LunarGo"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: 9L6N2ZF26B
+
+# ══════════════════════════════════════════════════════════════
+# Target 3: UI Tests
+# ══════════════════════════════════════════════════════════════
+
+  LunarGoUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: LunarGoUITests
+        excludes:
+          - "**/.DS_Store"
+    dependencies:
+      - target: LunarGo
+    settings:
+      base:
+        INFOPLIST_FILE: LunarGoUITests/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.ggsheng.LunarGoUITests
+        PRODUCT_NAME: LunarGoUITests
+        GENERATE_INFOPLIST_FILE: NO
+        TEST_TARGET: "$(BUILT_PRODUCTS_DIR)/LunarGo.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LunarGo"
+        CODE_SIGN_ENTITLEMENTS: ""
+        CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: 9L6N2ZF26B
+
+# ══════════════════════════════════════════════════════════════
+# Schemes
+# ══════════════════════════════════════════════════════════════
+
+schemes:
+  LunarGo:
+    build:
+      targets:
+        LunarGo: all
+        LunarGoTests: [test]
+        LunarGoUITests: [test]
+    run:
+      config: Debug
+    test:
+      config: Debug
+      targets:
+        - LunarGoTests
+        - LunarGoUITests
+    archive:
+      config: Release
